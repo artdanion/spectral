@@ -51,27 +51,28 @@ OctoWS2811 leds(ledsPerStrip, displayMemory, drawingMemory, config, numPins, pin
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial1.begin(115200);
   Wire.begin();
   leds.begin();
   leds.show();
 
   pinMode(A0, INPUT);
-
-  rval = 80;
+  /*
+  rval = 20;
   Wire.beginTransmission(pot_address);
   Wire.write(0b00000000);
   Wire.write(rval);
   Wire.endTransmission();
   Serial.print(" sent - ");
   Serial.println(rval, HEX);
+  */
 }
 
 void loop()
 {
 
-  /*
-  int microsec = 2000000 / leds.numPixels(); // change them all in 2 seconds
+  
+  int microsec = 200000 / leds.numPixels(); // change them all in 0.2 seconds
 
   // uncomment for voltage controlled speed
   // millisec = analogRead(A9) / 40;
@@ -82,10 +83,10 @@ void loop()
   colorWipe(YELLOW, microsec);
   colorWipe(PINK, microsec);
   colorWipe(ORANGE, microsec);
-  colorWipe(WHITE, microsec);
-*/
 
-  Serial.println(analogRead(A0));
+  Serial1.println(analogRead(A0));
+
+  //potLoop();
 
   delay(1000);
 }
@@ -101,10 +102,10 @@ void colorWipe(int color, int wait)
 }
 
 void potLoop()
-// sends values of 0x00 to 0x7F to pot in order to change the resistance
-// equates to 0~127
+// sends values of 0x00 to 0x2E to pot in order to change the resistance
+// equates to 0~120
 {
-  for (rval = 0; rval < 125; rval++)
+  for (rval = 0; rval < 120; rval++)
   {
     Wire.beginTransmission(pot_address);
     Wire.write(0b00000000);
