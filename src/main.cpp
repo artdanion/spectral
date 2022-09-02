@@ -88,7 +88,7 @@ void loop()
 
   //potLoop();
 
-  delay(1000);
+  delay(100);
 }
 
 void colorWipe(int color, int wait)
